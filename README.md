@@ -197,7 +197,7 @@ If you need help or have questions:
 
 ## Version
 
-Current Version: 1.0.0
+Current Version: 1.2.0
 
 Compatible with Paper 1.21.4+</content>
 <parameter name="path">README.md
