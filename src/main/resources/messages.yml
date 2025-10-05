@@ -1,0 +1,77 @@
+# BlockParty Messages Configuration
+
+messages:
+  # General messages
+  no-permission: "&cYou don't have permission to use this command!"
+  player-only: "&cThis command can only be used by players!"
+  plugin-reloaded: "&aBlockParty has been reloaded!"
+  
+  # Arena messages
+  arena-usage: "&cUsage: /bp arena <create|pos1|pos2|setspawn|waitlobby> [arena]"
+  arena-create-usage: "&cUsage: /bp arena create <name>"
+  arena-pos-usage: "&cUsage: /bp arena pos1|pos2 <arena>"
+  arena-spawn-usage: "&cUsage: /bp arena setspawn <arena>"
+  arena-lobby-usage: "&cUsage: /bp arena waitlobby <arena>"
+  arena-already-exists: "&cArena &e{arena} &calready exists!"
+  arena-created: "&aArena &e{arena} &ahas been created!"
+  arena-not-found: "&cArena &e{arena} &cnot found!"
+  arena-not-setup: "&cThis arena is not properly set up!"
+  arena-pos1-set: "&aPosition 1 set for arena &e{arena}&a!"
+  arena-pos2-set: "&aPosition 2 set for arena &e{arena}&a!"
+  arena-spawn-set: "&aSpawn location set for arena &e{arena}&a!"
+  arena-lobby-set: "&aWaiting lobby set for arena &e{arena}&a!"
+  
+  # Command usage messages
+  join-usage: "&cUsage: /bp join <arena>"
+  forcestart-usage: "&cUsage: /bp forcestart <arena>"
+  not-in-game: "&cYou are not currently in a game!"
+  game-force-started: "&aGame in arena &e{arena} &ahas been force started!"
+  cannot-force-start: "&cCannot force start game in arena &e{arena}&c. Game may not exist, already be running, or need more players!"
+  
+  # Hub messages
+  hub-set: "&aHub spawn location has been set!"
+  
+  # Sign messages
+  sign-usage: "&cUsage: /bp setsign <arena>"
+  sign-not-found: "&cYou must be looking at a sign!"
+  sign-created: "&aJoin sign created for arena &e{arena}&a!"
+  sign-removed: "&aJoin sign removed!"
+  
+  # Game messages
+  already-in-game: "&cYou are already in a game!"
+  game-full: "&cThis game is full!"
+  not-enough-players: "&cNot enough players to start the game!"
+  player-joined: "&e{player} &ajoined the game! &7({current}/{max})"
+  player-left: "&e{player} &cleft the game! &7({current}/{max})"
+  left-game: "&eYou succesfully left the game"
+  countdown: "&eGame starts in &6{time} &eseconds!"
+  game-started: "&aThe game has started! Good luck!"
+  eliminated: "&cYou have been eliminated!"
+  player-eliminated: "&e{player} &chas been eliminated!"
+  game-won: "&6{winner} &awon the game! Congratulations!"
+  game-draw: "&eThe game ended in a draw!"
+  player-not-found: "&cPlayer not found!"
+  stats-header: "&6Stats for &e{player}&6:"
+  stats-wins: "&eWins: &6{wins}"
+  stats-losses: "&eLosses: &6{losses}"
+  stats-games: "&eGames Played: &6{games}"
+  stats-rounds: "&eRounds Survived: &6{rounds}"
+  stats-winrate: "&eWin Rate: &6{winrate}%"
+
+titles:
+  round-start:
+    title: "&6Round {round}"
+    subtitle: "&eFind: &b{block} &7({time}s)"
+    fade-in: 10
+    stay: 40
+    fade-out: 10
+  
+  time-warning:
+    title: "&c{time}"
+    subtitle: ""
+    fade-in: 0
+    stay: 20
+    fade-out: 0
+
+actionbar:
+  timer: "&eTime remaining: &6{time}s"

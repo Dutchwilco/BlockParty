@@ -1,0 +1,23 @@
+name: BlockParty
+version: '${project.version}'
+main: nl.dutchcoding.blockparty.BlockParty
+api-version: 1.13
+prefix: BlockParty
+authors: [Dutchwilco]
+description: A comprehensive BlockParty minigame plugin
+website: https://github.com/wilcodwg
+softdepend: [ItemsAdder, PlaceholderAPI]
+
+commands:
+  blockparty:
+    description: Main BlockParty command
+    aliases: [bp]
+    permission: blockparty.admin
+
+permissions:
+  blockparty.admin:
+    description: Access to all BlockParty commands
+    default: op
+  blockparty.play:
+    description: Permission to join BlockParty games
+    default: true
