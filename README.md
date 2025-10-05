@@ -199,5 +199,5 @@ If you need help or have questions:
 
 Current Version: 1.2.0
 
-Compatible with Paper 1.21.4+</content>
+Compatible with Paper, Spigot, Bukkit and Purpur 1.13-1.21.X</content>
 <parameter name="path">README.md
