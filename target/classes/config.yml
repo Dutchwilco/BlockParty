@@ -1,0 +1,94 @@
+# BlockParty Configuration
+# Main hub location where players return after games
+hub-location: null
+
+# Countdown time before games start (seconds)
+countdown-time: 30
+
+# Return to lobby item (given when joining waiting lobby)
+lobby-item:
+  enabled: true
+  material: "RED_BED"
+  slot: 8
+  name: "&cReturn to Lobby"
+  lore:
+    - "&7Click to leave the game"
+    - "&7and return to the lobby"
+
+# Rewards system
+rewards:
+  # Winner rewards (given to the last player standing)
+  winner:
+    commands:
+      - "eco give {player} 100"
+      - "give {player} diamond 5"
+      - "broadcast &a{player} won BlockParty!"
+    enabled: true
+  
+  # Participation rewards (given to all players who participate)
+  participation:
+    commands:
+      - "eco give {player} 10"
+      - "give {player} emerald 1"
+    enabled: true
+  
+  # Round survival rewards (given per round survived)
+  survival:
+    commands:
+      - "eco give {player} 5"
+    enabled: true
+    # Minimum rounds to survive before getting rewards
+    min-rounds: 3
+
+# Music settings for continuous playback
+music:
+  # Duration of your music track in seconds (used for continuous playback calculation)
+  # For ItemsAdder custom music: set this to the exact duration of your track
+  # For vanilla music discs: use the actual disc duration
+  # Default: 180 seconds (3 minutes)
+  track-duration: 180
+
+# Available blocks for the game floor
+blocks:
+  - "RED_WOOL"
+  - "BLUE_WOOL"
+  - "GREEN_WOOL"
+  - "YELLOW_WOOL"
+  - "ORANGE_WOOL"
+  - "PURPLE_WOOL"
+  - "PINK_WOOL"
+  - "LIGHT_BLUE_WOOL"
+  - "LIME_WOOL"
+  - "MAGENTA_WOOL"
+  - "CYAN_WOOL"
+  - "WHITE_WOOL"
+  - "BLACK_WOOL"
+  - "GRAY_WOOL"
+  - "LIGHT_GRAY_WOOL"
+  - "BROWN_WOOL"
+
+# Scoreboard configurations
+scoreboard:
+  waiting:
+    title: "[BlockParty]"
+    lines:
+      - "Waiting.."
+      - "Players: %players%"
+      - ""
+      - "play.spacemc.nl"
+  ingame:
+    title: "[BlockParty]"
+    lines:
+      - "Round: %round%"
+      - "Time: %time%"
+      - ""
+      - "Players: %players%"
+      - ""
+      - "play.spacemc.nl"
+  winner:
+    title: "[BlockParty]"
+    lines:
+      - ""
+      - "Winner: %winner%"
+      - ""
+      - "play.spacemc.nl"

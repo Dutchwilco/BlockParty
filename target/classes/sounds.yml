@@ -1,0 +1,23 @@
+# BlockParty Sounds Configuration
+# You can use vanilla Minecraft sounds or ItemsAdder custom sounds
+# For ItemsAdder sounds, use format: "namespace:sound_name"
+
+# Music played during rounds
+game-music: "MUSIC_DISC_BLOCKS"
+
+# Sound played when a player dies/gets eliminated
+death-sound: "ENTITY_LIGHTNING_BOLT_THUNDER"
+
+# Sound played when a player wins
+win-sound: "ENTITY_PLAYER_LEVELUP"
+
+# Sound played during countdown
+countdown-sound: "BLOCK_NOTE_BLOCK_PLING"
+
+# Sound played when game starts
+start-sound: "ENTITY_ENDER_DRAGON_GROWL"
+
+# Example ItemsAdder custom sounds (uncomment and modify as needed):
+# game-music: "itemsadder:blockparty_music"
+# death-sound: "itemsadder:elimination_sound"
+# win-sound: "itemsadder:victory_fanfare"
