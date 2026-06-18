@@ -281,7 +281,7 @@ public class GameManager {
             .replace("{round}", String.valueOf(game.getRound()));
         String subtitle = plugin.getMessageManager().getSubtitle("round-start")
             .replace("{block}", formatBlockName(selectedBlock))
-            .replace("{time}", String.valueOf(game.getRoundTime()));
+            .replace("{time}", String.valueOf(plugin.getConfigManager().getRoundTime(game.getRound())));
 
         for (UUID playerId : game.getAlivePlayers()) {
             Player player = Bukkit.getPlayer(playerId);
@@ -302,7 +302,7 @@ public class GameManager {
     }
     
     private void startRoundTimer(Game game) {
-        game.setTimeLeft(game.getRoundTime());
+        game.setTimeLeft(plugin.getConfigManager().getRoundTime(game.getRound()));
         
         new BukkitRunnable() {
             @Override

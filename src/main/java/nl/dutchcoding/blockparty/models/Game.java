@@ -75,18 +75,8 @@ public class Game {
         return alivePlayers.isEmpty() ? null : alivePlayers.get(0);
     }
     
-    public int getRoundTime() {
-        if (round <= 3) return 12;
-        if (round <= 6) return 9;
-        if (round <= 9) return 6;
-        if (round <= 13) return 4;
-        if (round <= 16) return 2;
-        return 1;
-    }
-    
     public void nextRound() {
         this.round++;
-        this.timeLeft = getRoundTime();
     }
     
     // Getters and setters
