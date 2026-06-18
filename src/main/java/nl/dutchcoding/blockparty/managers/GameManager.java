@@ -392,8 +392,8 @@ public class GameManager {
 
                 plugin.getSoundManager().playWinSound(winner);
 
-                // Reset floor to one color
-                resetFloorToOneColor(game);
+                // Restore full floor with random colors
+                generateFloor(game);
 
                 // Launch firework
                 launchWinFirework(winner);
