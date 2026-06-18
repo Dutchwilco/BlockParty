@@ -5,7 +5,7 @@ api-version: 1.13
 prefix: BlockParty
 authors: [Dutchwilco]
 description: A comprehensive BlockParty minigame plugin
-website: https://github.com/wilcodwg
+website: https://dutchcoding.nl/
 softdepend: [ItemsAdder, PlaceholderAPI]
 
 commands:
