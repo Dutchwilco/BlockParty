@@ -5,6 +5,10 @@ hub-location: null
 # Countdown time before games start (seconds)
 countdown-time: 30
 
+# When a player is eliminated, keep them as spectator to watch the remaining game
+# Set to false to immediately return them to the location where they joined from
+spectator-on-eliminate: true
+
 # Return to lobby item (given when joining waiting lobby)
 lobby-item:
   enabled: true

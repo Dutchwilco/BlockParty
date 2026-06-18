@@ -444,6 +444,53 @@ public class GameManager {
         }
     }
     
+    public void eliminatePlayerReturn(Player player) {
+        String arenaName = playerArenas.get(player.getUniqueId());
+        if (arenaName == null) return;
+
+        Game game = activeGames.get(arenaName);
+
+        // Get saved join location before restorePlayerData removes it
+        Location savedLocation = plugin.getInventoryManager().getSavedLocation(player);
+
+        // Remove from game tracking
+        if (game != null) {
+            game.getPlayers().remove(player.getUniqueId());
+        }
+        playerArenas.remove(player.getUniqueId());
+
+        // Remove scoreboard
+        scoreboardManager.removeScoreboard(player);
+
+        // Re-enable collision
+        player.setCollidable(true);
+
+        // Teleport to where they were when they joined
+        if (savedLocation != null) {
+            player.teleport(savedLocation);
+        } else {
+            Location hub = plugin.getConfigManager().getHubLocation();
+            if (hub != null) {
+                player.teleport(hub);
+            } else {
+                player.teleport(player.getWorld().getSpawnLocation());
+            }
+        }
+
+        // Restore inventory and player state
+        boolean restored = plugin.getInventoryManager().restorePlayerData(player);
+        if (!restored) {
+            player.getInventory().clear();
+            player.setHealth(20);
+            player.setFoodLevel(20);
+        }
+
+        // Update scoreboards for remaining players
+        if (game != null && game.getState() == Game.GameState.PLAYING) {
+            updateIngameScoreboards(game);
+        }
+    }
+
     private void restorePlayer(Player player) {
         // Re-enable collision first
         player.setCollidable(true);

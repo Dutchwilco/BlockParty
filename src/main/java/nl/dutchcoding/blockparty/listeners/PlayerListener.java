@@ -40,37 +40,40 @@ public class PlayerListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
         Game game = plugin.getGameManager().getPlayerGame(player);
-        if (game != null) {
-            // Clear drops and keep inventory/exp
-            event.getDrops().clear();
-            event.setDroppedExp(0);
-            event.setKeepInventory(true);
-            event.setKeepLevel(true);
-            
-            // Respawn player immediately
-            org.bukkit.Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                player.spigot().respawn();
-                player.setHealth(20);
-            }, 1L);
-            
-            // Eliminate player if game is active
-            if (game.getState() == Game.GameState.PLAYING) {
-                game.eliminatePlayer(player.getUniqueId());
-                player.setGameMode(GameMode.SPECTATOR);
+        if (game == null) return;
 
-                // Send elimination message
-                player.sendMessage(plugin.getMessageManager().getMessage("eliminated"));
-                plugin.getGameManager().broadcastToGame(game, plugin.getMessageManager().getMessage("player-eliminated")
-                    .replace("{player}", player.getName()));
+        event.getDrops().clear();
+        event.setDroppedExp(0);
+        event.setKeepInventory(true);
+        event.setKeepLevel(true);
 
-                // Play death sound
-                plugin.getSoundManager().playDeathSound(player);
+        boolean isPlaying = game.getState() == Game.GameState.PLAYING;
 
-                // Update stats
-                plugin.getStatsManager().getPlayerStats(player.getUniqueId()).addLoss();
-                plugin.getStatsManager().getPlayerStats(player.getUniqueId()).addRoundsSurvived(game.getRound());
-            }
+        if (isPlaying) {
+            game.eliminatePlayer(player.getUniqueId());
+
+            player.sendMessage(plugin.getMessageManager().getMessage("eliminated"));
+            plugin.getGameManager().broadcastToGame(game, plugin.getMessageManager().getMessage("player-eliminated")
+                .replace("{player}", player.getName()));
+
+            plugin.getSoundManager().playDeathSound(player);
+
+            plugin.getStatsManager().getPlayerStats(player.getUniqueId()).addLoss();
+            plugin.getStatsManager().getPlayerStats(player.getUniqueId()).addRoundsSurvived(game.getRound());
         }
+
+        org.bukkit.Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            player.spigot().respawn();
+            player.setHealth(20);
+
+            if (isPlaying) {
+                if (plugin.getConfigManager().isSpectatorOnEliminate()) {
+                    player.setGameMode(GameMode.SPECTATOR);
+                } else {
+                    plugin.getGameManager().eliminatePlayerReturn(player);
+                }
+            }
+        }, 1L);
     }
     
     @EventHandler
@@ -84,8 +87,12 @@ public class PlayerListener implements Listener {
             event.getTo().getY() < game.getArena().getPos1().getY() - 10) {
 
             game.eliminatePlayer(event.getPlayer().getUniqueId());
-            event.getPlayer().setGameMode(GameMode.SPECTATOR);
-            event.getPlayer().teleport(game.getArena().getSpawnLocation());
+            if (plugin.getConfigManager().isSpectatorOnEliminate()) {
+                event.getPlayer().setGameMode(GameMode.SPECTATOR);
+                event.getPlayer().teleport(game.getArena().getSpawnLocation());
+            } else {
+                plugin.getGameManager().eliminatePlayerReturn(event.getPlayer());
+            }
 
             event.getPlayer().sendMessage(plugin.getMessageManager().getMessage("eliminated"));
             plugin.getGameManager().broadcastToGame(game, plugin.getMessageManager().getMessage("player-eliminated")

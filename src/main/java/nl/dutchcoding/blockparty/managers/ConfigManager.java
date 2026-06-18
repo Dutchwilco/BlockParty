@@ -93,6 +93,10 @@ public class ConfigManager {
     public int getCountdownTime() {
         return config.getInt("countdown-time", 30);
     }
+
+    public boolean isSpectatorOnEliminate() {
+        return config.getBoolean("spectator-on-eliminate", true);
+    }
     
     public java.util.List<String> getGameBlocks() {
         return config.getStringList("blocks");

@@ -1,6 +1,7 @@
 package nl.dutchcoding.blockparty.managers;
 
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -39,7 +40,10 @@ public class InventoryManager {
         
         // Save potion effects
         data.potionEffects = player.getActivePotionEffects();
-        
+
+        // Save join location
+        data.location = player.getLocation();
+
         savedInventories.put(player.getUniqueId(), data);
     }
 
@@ -90,6 +94,14 @@ public class InventoryManager {
     }
 
     /**
+     * Returns the location where the player was when they joined the game
+     */
+    public Location getSavedLocation(Player player) {
+        PlayerInventoryData data = savedInventories.get(player.getUniqueId());
+        return data != null ? data.location : null;
+    }
+
+    /**
      * Removes saved data for a player without restoring it
      */
     public void removeSavedData(Player player) {
@@ -128,5 +140,6 @@ public class InventoryManager {
         float flySpeed;
         float walkSpeed;
         Collection<PotionEffect> potionEffects;
+        Location location;
     }
 }
