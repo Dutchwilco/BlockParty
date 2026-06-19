@@ -604,28 +604,51 @@ public class GameManager {
     private void returnPlayersToHub(Game game) {
         // Create a copy of the player list to avoid concurrent modification
         List<UUID> playersCopy = new ArrayList<>(game.getPlayers());
-        
+
         for (UUID playerId : playersCopy) {
             Player player = Bukkit.getPlayer(playerId);
             if (player != null) {
                 // Give participation rewards
                 plugin.getRewardManager().giveParticipationRewards(player);
-                
+
                 // Give survival rewards based on rounds survived
                 PlayerStats stats = plugin.getStatsManager().getPlayerStats(playerId);
                 plugin.getRewardManager().giveSurvivalRewards(player, game.getRound());
-                
+
+                // Get saved join location BEFORE restorePlayerData removes it
+                Location savedLocation = plugin.getInventoryManager().getSavedLocation(player);
+
                 // Remove from tracking BEFORE restoring
                 playerArenas.remove(playerId);
-                
+
                 // Remove scoreboard
                 scoreboardManager.removeScoreboard(player);
-                
-                // Restore player and teleport to hub
-                restorePlayer(player);
+
+                // Re-enable collision
+                player.setCollidable(true);
+
+                // Teleport to where they were when they joined, fall back to hub or world spawn
+                if (savedLocation != null) {
+                    player.teleport(savedLocation);
+                } else {
+                    Location hub = plugin.getConfigManager().getHubLocation();
+                    if (hub != null) {
+                        player.teleport(hub);
+                    } else {
+                        player.teleport(player.getWorld().getSpawnLocation());
+                    }
+                }
+
+                // Restore inventory and player state
+                boolean restored = plugin.getInventoryManager().restorePlayerData(player);
+                if (!restored) {
+                    player.getInventory().clear();
+                    player.setHealth(20);
+                    player.setFoodLevel(20);
+                }
             }
         }
-        
+
         // Clear game players list
         game.getPlayers().clear();
         game.getAlivePlayers().clear();

@@ -1,21 +1,33 @@
 # BlockParty Round Timers Configuration
-# All times are in seconds and can be customized
+# All times are in seconds.
+#
+# You can define a timer for every individual round:
+#   round-1: 12
+#   round-2: 11
+#   round-3: 10
+#
+# Or define group starts and let rounds in between inherit the previous value:
+#   round-1: 12   <- rounds 1, 2, 3 all use 12 seconds
+#   round-4: 9    <- rounds 4, 5, 6 all use 9 seconds
+#
+# The system always looks for an exact match first, then falls back
+# to the nearest previously defined round.
 
 round-times:
   # Rounds 1-3: 12 seconds
   round-1: 12
-  
-  # Rounds 4-6: 9 seconds  
+
+  # Rounds 4-6: 9 seconds
   round-4: 9
-  
+
   # Rounds 7-9: 6 seconds
   round-7: 6
-  
+
   # Rounds 10-13: 4 seconds
   round-10: 4
-  
+
   # Rounds 14-16: 2 seconds
   round-14: 2
-  
+
   # Rounds 17+: 1 second
   round-17: 1

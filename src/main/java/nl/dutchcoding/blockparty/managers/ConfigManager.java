@@ -104,24 +104,16 @@ public class ConfigManager {
     
     // Timer configurations
     public int getRoundTime(int round) {
-        return timersConfig.getInt("round-times.round-" + getRoundGroup(round), getDefaultRoundTime(round));
-    }
-    
-    private int getRoundGroup(int round) {
-        if (round <= 3) return 1;
-        if (round <= 6) return 4;
-        if (round <= 9) return 7;
-        if (round <= 13) return 10;
-        if (round <= 16) return 14;
-        return 17;
-    }
-    
-    private int getDefaultRoundTime(int round) {
-        if (round <= 3) return 12;
-        if (round <= 6) return 9;
-        if (round <= 9) return 6;
-        if (round <= 13) return 4;
-        if (round <= 16) return 2;
+        // Check for exact round match first
+        if (timersConfig.contains("round-times.round-" + round)) {
+            return timersConfig.getInt("round-times.round-" + round);
+        }
+        // Fall back to the nearest previously defined round
+        for (int i = round - 1; i >= 1; i--) {
+            if (timersConfig.contains("round-times.round-" + i)) {
+                return timersConfig.getInt("round-times.round-" + i);
+            }
+        }
         return 1;
     }
     
