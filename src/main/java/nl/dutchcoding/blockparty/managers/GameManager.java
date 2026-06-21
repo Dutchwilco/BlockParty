@@ -494,19 +494,25 @@ public class GameManager {
     private void restorePlayer(Player player) {
         // Re-enable collision first
         player.setCollidable(true);
-        
+
         // Set gamemode to survival before teleporting
         player.setGameMode(GameMode.SURVIVAL);
-        
-        // Teleport to hub FIRST (before restoring inventory)
-        Location hub = plugin.getConfigManager().getHubLocation();
-        if (hub != null) {
-            player.teleport(hub);
+
+        // Get saved join location before restorePlayerData removes it
+        Location savedLocation = plugin.getInventoryManager().getSavedLocation(player);
+
+        // When spectator-on-eliminate is false, return to where the player was before joining
+        if (!plugin.getConfigManager().isSpectatorOnEliminate() && savedLocation != null) {
+            player.teleport(savedLocation);
         } else {
-            // Fallback to world spawn if no hub set
-            player.teleport(player.getWorld().getSpawnLocation());
+            Location hub = plugin.getConfigManager().getHubLocation();
+            if (hub != null) {
+                player.teleport(hub);
+            } else {
+                player.teleport(player.getWorld().getSpawnLocation());
+            }
         }
-        
+
         // Try to restore saved inventory and player data
         boolean restored = plugin.getInventoryManager().restorePlayerData(player);
 
